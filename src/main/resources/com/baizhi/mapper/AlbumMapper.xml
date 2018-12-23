@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.mapper.AlbumMapper">
+
+    <resultMap id="a1" type="com.baizhi.entity.Album">
+        <id column="aid" property="id"></id>
+        <result column="atitle" property="title"></result>
+        <result column="acount" property="count"></result>
+        <result column="acoverimg" property="coverImg"></result>
+        <result column="ascore" property="score"></result>
+        <result column="aauthor" property="author"></result>
+        <result column="abroadcast" property="broadcast"></result>
+        <result column="abrief" property="brief"></result>
+        <result column="apubdate" property="pubDate"></result>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id column="bid" property="id"></id>
+            <result column="btitle" property="title"></result>
+            <result column="bsize" property="size"></result>
+            <result column="bduration" property="duration"></result>
+            <result column="burl" property="url"></result>
+            <result column="buploaddate" property="uploadDate"></result>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultMap="a1">
+      select a.id aid,a.title atitle,a.count acount,a.cover_img acoverimg,a.score ascore,a.author aauthor,a.broadcast abroadcast,a.brief abrief,a.pub_date apubdate,
+             b.id bid,b.title btitle,b.size bsize,b.duration bduration,b.url burl,b.upload_date buploaddate
+      from album a left join chapter b
+      on a.id=b.album_id
+    </select>
+    <select id="queryCount" resultType="Integer">
+        select count(*) from album
+    </select>
+</mapper>
