@@ -44,17 +44,17 @@
             handler: function () {
                 var row = $("#albumTreegrid").treegrid("getSelected");
                 if(row.id!=null && typeof(row.id)=="number"){
-                    $.get(
-                        "${pageContext.request.contextPath}/chapter/downChapter",
-                        "id="+row.id,
-                        function(){
-                            $.messager.show({
-                                title:"系统提示",
-                                msg:"下载成功"
-                            });
-                        }
-                    );
-
+                    <%--$.get(--%>
+                        <%--"${pageContext.request.contextPath}/chapter/downChapter",--%>
+                        <%--"id="+row.id,--%>
+                        <%--function(){--%>
+                            <%--$.messager.show({--%>
+                                <%--title:"系统提示",--%>
+                                <%--msg:"下载成功"--%>
+                            <%--});--%>
+                        <%--}--%>
+                    <%--);--%>
+                    location.href="${pageContext.request.contextPath}/chapter/downChapter?url="+row.url;
                 }else{
                     alert("请先选中正确的音频");
                 }

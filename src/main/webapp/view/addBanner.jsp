@@ -29,7 +29,7 @@
                     },
                     success:function(){
                         $("#addBannerDialog").dialog("close");
-                        $("#BannerDatagrid").datagrid("load");
+                        $("#bannerDatagrid").edatagrid("reload");
                         $.messager.show({
                             title:"系统提示",
                             msg:"提交成功"

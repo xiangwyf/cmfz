@@ -4,6 +4,7 @@ import com.baizhi.entity.Chapter;
 import com.baizhi.service.ChapterService;
 import com.baizhi.util.ReadVideoTimeUtil;
 import com.baizhi.util.UploadFile;
+import org.apache.commons.io.FileUtils;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.audio.ogg.util.OggInfoReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLEncoder;
 
 @Controller
 @RequestMapping("/chapter")
@@ -55,53 +58,19 @@ public class ChapterController {
         return "defeat";
     }
     @RequestMapping("/downChapter")
-    @ResponseBody
-    public void downChapter(Integer id, HttpServletRequest request, HttpServletResponse response){
-        Chapter chapter = chapterService.queryOne(id);
-        String[] split = chapter.getUrl().split("/");
-        String fileName=split[1];
-        // 设置文件名，根据业务需要替换成要下载的文件名
-//        String fileName = "wo.mp3";
-        if (fileName != null) {
-            //设置文件路径
-            String realPath = "E://downChapter//";
-            File file = new File(realPath , fileName);
-            if (file.exists()) {
-                response.setContentType("application/force-download");// 设置强制下载不打开
-                response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-                byte[] buffer = new byte[1024];
-                FileInputStream fis = null;
-                BufferedInputStream bis = null;
-                try {
-                    fis = new FileInputStream(file);
-                    bis = new BufferedInputStream(fis);
-                    OutputStream os = response.getOutputStream();
-                    int i = bis.read(buffer);
-                    while (i != -1) {
-                        os.write(buffer, 0, i);
-                        i = bis.read(buffer);
-                    }
-                    System.out.println("success");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (bis != null) {
-                        try {
-                            bis.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (fis != null) {
-                        try {
-                            fis.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
+    public void downChapter(String url, HttpSession session, HttpServletResponse response) throws IOException {
+        String[] split = url.split("/");
+        String name = split[2];
+        String realPath = session.getServletContext().getRealPath("/chapterDir");
+        File srcFile = new File(realPath+"/"+name);
+        byte[] bs = FileUtils.readFileToByteArray(srcFile);
+
+        // 设置响应头信息，以附件的形式下载
+        response.setHeader("content-disposition","attachment; filename=" + URLEncoder.encode(name,"UTF-8"));
+        // 使用响应输出流，往client输出文件内容
+        ServletOutputStream sos = response.getOutputStream();
+        sos.write(bs);
+        sos.close();
 
     }
 }

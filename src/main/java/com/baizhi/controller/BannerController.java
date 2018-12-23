@@ -5,6 +5,8 @@ import com.baizhi.entity.Banner;
 import com.baizhi.entity.BannerDto;
 import com.baizhi.service.BannerService;
 import com.baizhi.util.UploadFile;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/banner")
+@Log
 public class BannerController {
     @Autowired
     private BannerService bannerService;
@@ -73,7 +76,17 @@ public class BannerController {
 
     @RequestMapping("/deleteBanner")
     @ResponseBody
-    public void deleteBanner(Banner banner){
-        bannerService.deleteBanner(banner);
+    public void deleteBanner(Integer id,HttpSession session){
+        Banner banner = bannerService.queryOneById(id);
+        String[] split = banner.getImgPath().split("/");
+        String name = split[2];
+        String realPath = session.getServletContext().getRealPath("/img");
+        File file = new File(realPath+"/"+name);
+
+        if (file.delete()) {
+            bannerService.deleteBanner(banner);
+        } else {
+        }
+
     }
 }

@@ -30,7 +30,6 @@
             handler: function () {
                 var row = $("#bannerDatagrid").edatagrid("getSelected");
                 if(row!=null){
-                    console.info(row.id);
                     $.get(
                         "${pageContext.request.contextPath}/banner/deleteBanner",
                         "id="+row.id,

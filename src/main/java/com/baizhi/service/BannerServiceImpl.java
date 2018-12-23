@@ -12,7 +12,8 @@ import java.util.List;
 
 @Service
 @Transactional
-public class BannerServiceImpl implements BannerService {
+public class BannerServiceImpl implements BannerService
+{
     @Autowired
     private BannerMapper bannerMapper;
 
@@ -37,5 +38,10 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public void deleteBanner(Banner banner){
         bannerMapper.deleteByPrimaryKey(banner);
+    }
+
+    @Override
+    public Banner queryOneById(Integer id) {
+        return bannerMapper.selectByPrimaryKey(id);
     }
 }

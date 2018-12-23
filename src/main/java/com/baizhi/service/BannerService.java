@@ -10,4 +10,5 @@ public interface BannerService {
     public void insertBanner(Banner banner);
     public void updateBanner(Banner banner);
     public void deleteBanner(Banner banner);
+    public Banner queryOneById(Integer id);
 }
