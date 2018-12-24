@@ -47,7 +47,8 @@ public class ChapterController {
             chapter.setUrl("/chapterDir/"+fileName);
 
             chapter.setSize(Integer.toString(uploadFile.length));
-            chapter.setDuration(ReadVideoTimeUtil.readVideo(filePath+"/"+fileName));
+            String sc = ReadVideoTimeUtil.readVideo(filePath+"/"+fileName);
+            chapter.setDuration(sc);
 
 //            chapter.setDuration("3min");
             chapterService.insertChapter(chapter);

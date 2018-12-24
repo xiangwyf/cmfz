@@ -18,10 +18,10 @@ public class AlbumServiceImpl implements AlbumService {
     private AlbumMapper albumMapper;
 
     @Override
-    public AlbumDto queryAll(int currow,int curpage) {
+    public AlbumDto queryAll(int currows,int curpage) {
         AlbumDto dto = new AlbumDto();
-        PageHelper.startPage(curpage,currow);
-        List<Album> albumList = albumMapper.queryAll();
+//        PageHelper.startPage(curpage,currows);
+        List<Album> albumList = albumMapper.queryAll(currows,curpage);
         dto.setRows(albumList);
         dto.setTotal(albumMapper.queryCount());
         return dto;

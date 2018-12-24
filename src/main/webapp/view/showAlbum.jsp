@@ -3,6 +3,7 @@
 <script type="text/javascript">
 	$(function(){
         $("#showAlbumForm").form("load","${pageContext.request.contextPath}/album/queryOneById?id="+albumsId);
+		$("#showAlbumImg").prop("src", "${pageContext.request.contextPath}" + albumsUrl);
         $("#title").validatebox({
             required:true,
             readonly:true
@@ -44,6 +45,7 @@
 	标题：<input id="title" name="title"/><br/>
 	章节数：<input id="count" name="count"/><br/>
 	封面：<input id="coverImg" name="coverImg"><br/>
+	<img src="" id="showAlbumImg">
 	评价：<input id="score" name="score"/><br/>
 	作者：<input id="author" name="author"/><br/>
 	播音：<input id="broadcast" name="broadcast"/><br/>

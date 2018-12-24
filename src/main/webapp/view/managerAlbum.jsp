@@ -11,12 +11,13 @@
                 var row = $("#albumTreegrid").treegrid("getSelected");
                 if (row != null && typeof(row.id)=="string") {
                     //查看指定行
-                    console.info(row.id);
-                    console.info(typeof(row.id));
                     albumsId=row.id;
+                    albumsUrl=row.coverImg;
                     //根据id去album中查询对应的对象
                     <%--$("#showAlbumForm").form("load","${pageContext.request.contextPath}/album/queryOneById?id="+row.id);--%>
+                    // $("#showAlbumForm").form("load",row);
                     $("#showAlbumDialog").dialog("open");
+
                 } else {
                     alert("请选中正确的行");
                 }
