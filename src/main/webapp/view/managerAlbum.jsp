@@ -60,6 +60,12 @@
                     alert("请先选中正确的音频");
                 }
             }
+        }, '-', {
+            text: "导出专辑",
+            iconCls: 'icon-edit',
+            handler: function () {
+                location.href="${pageContext.request.contextPath}/album/albumExport"
+            }
         }]
         $("#albumTreegrid").treegrid({
             url:"${pageContext.request.contextPath}/album/queryAll",

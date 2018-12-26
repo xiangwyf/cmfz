@@ -18,10 +18,10 @@ public class AlbumServiceImpl implements AlbumService {
     private AlbumMapper albumMapper;
 
     @Override
-    public AlbumDto queryAll(int currows,int curpage) {
+    public AlbumDto queryByPage(int currows,int curpage) {
         AlbumDto dto = new AlbumDto();
 //        PageHelper.startPage(curpage,currows);
-        List<Album> albumList = albumMapper.queryAll(currows,curpage);
+        List<Album> albumList = albumMapper.queryByPage(currows,curpage);
         dto.setRows(albumList);
         dto.setTotal(albumMapper.queryCount());
         return dto;
@@ -36,5 +36,11 @@ public class AlbumServiceImpl implements AlbumService {
     public void insertAlbum(Album album) {
         album.setId(UUID.randomUUID().toString().replace("-",""));
         albumMapper.insert(album);
+    }
+
+    @Override
+    public List<Album> queryAll() {
+        List<Album> albumList = albumMapper.queryAll();
+        return albumList;
     }
 }

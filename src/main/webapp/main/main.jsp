@@ -14,6 +14,8 @@
 <script type="text/javascript" src="../js/datagrid-detailview.js"></script>
 <script type="text/javascript" src="../js/jquery.edatagrid.js"></script>
 <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
+<script type="text/javascript" src="../js/china.js"></script>
 <script type="text/javascript">
 	$(function(){
         $.get("${pageContext.request.contextPath}/menu/queryAll",function(result){
@@ -23,12 +25,13 @@
                 }else{
                     var cont="";
                     $.each(menu.menuList,function(ind,smenu){
-                        cont+= "<a href='#' class='easyui-linkbutton' data-options=\"iconCls:'icon-search'\" onclick=\"addTabs('"+smenu.title+"','"+smenu.iconcls+"','"+smenu.url+"')\" >"+smenu.title+"</a></br>";
+                        cont+= "<p style='text-align: center'><a href='#' class='easyui-linkbutton' data-options=\"iconCls:'icon-search'\" onclick=\"addTabs('"+smenu.title+"','"+smenu.iconcls+"','"+smenu.url+"')\" >"+smenu.title+"</a></p>";
                     });
                     $("#aa").accordion("add", {
                         title: menu.title,
                         iconCls:menu.iconcls,
-                        content:cont
+                        content:cont,
+                        selected:false
                     });
 
                 }

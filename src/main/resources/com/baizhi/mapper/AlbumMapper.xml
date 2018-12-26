@@ -21,7 +21,7 @@
             <result column="buploaddate" property="uploadDate"></result>
         </collection>
     </resultMap>
-    <select id="queryAll" resultMap="a1">
+    <select id="queryByPage" resultMap="a1">
       select a.id aid,a.title atitle,a.count acount,a.cover_img acoverimg,a.score ascore,a.author aauthor,a.broadcast abroadcast,a.brief abrief,a.pub_date apubdate,
              b.id bid,b.title btitle,b.size bsize,b.duration bduration,b.url burl,b.upload_date buploaddate
       from  (select * from album limit ${(curpage-1)*currows},${currows}) a left join chapter b
@@ -30,5 +30,12 @@
     </select>
     <select id="queryCount" resultType="Integer">
         select count(*) from album
+    </select>
+
+    <select id="queryAll" resultMap="a1">
+        select a.id aid,a.title atitle,a.count acount,a.cover_img acoverimg,a.score ascore,a.author aauthor,a.broadcast abroadcast,a.brief abrief,a.pub_date apubdate,
+               b.id bid,b.title btitle,b.size bsize,b.duration bduration,b.url burl,b.upload_date buploaddate
+        from album a left join chapter b
+        on a.id=b.album_id
     </select>
 </mapper>
